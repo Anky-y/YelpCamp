@@ -43,6 +43,7 @@
       <footer class="card-footer d-flex justify-content-left"><p class="text-secondary mb-0">2 days ago</p></footer>
     </div>
   </div>
+  <div id="map" style="width: 400px; height: 300px" class="align-self-sm-start"></div>
   <div class="col-12 col-sm-6">
     <% if(curUser) { %>
     <h2>Leave a review</h2>
@@ -85,3 +86,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  const mapToken = `<%-process.env.MAPBOX_TOKEN%>`;
+  const campground = `<%- JSON.stringify(camp) %>`;
+</script>
+<script src="/Js/showPageMap.js"></script>

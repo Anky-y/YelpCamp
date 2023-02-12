@@ -23,13 +23,14 @@ const seedDB = async () => {
     const camp = new Campground({
       location: `${cities[rand1000].city}, ${cities[rand1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
+      geometry: { type: "Point", coordinates: [-122.330062, 47.603832] },
       images: [
         {
           url: "https://res.cloudinary.com/da6kxltkj/image/upload/v1676189231/YelpCamp/r09harxl9m3p2ibwxy9i.jpg",
           filename: "YelpCamp/r09harxl9m3p2ibwxy9i",
         },
         {
-          url: "https://res.cloudinary.com/da6kxltkj/image/upload/v1676139783/YelpCamp/xirdrekmqz3d7oqgyive.jpg",
+          url: "https://res.cloudinary.com/da6kxltkj/image/upload/v1676139783/YelpCamp/ncvtl0npqyji1nbysaev.jpg",
           filename: "YelpCamp/xirdrekmqz3d7oqgyive",
         },
       ],
