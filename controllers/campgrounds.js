@@ -1,6 +1,6 @@
 const Campground = require(`../models/campground`);
 const catchAsync = require(`../utils/catchAsync`);
-
+const { uploader } = require(`../cloudinary`);
 module.exports.index = catchAsync(async (req, res) => {
   const camps = await Campground.find();
   res.render(`campgrounds/index`, { camps });
@@ -11,11 +11,12 @@ module.exports.getNewForm = (req, res) => {
 };
 
 module.exports.createNewCampground = catchAsync(async (req, res, next) => {
-  // if (!req.body.campground) throw new ExpressError(`Invalid Campground data`, 400);
   const { campground } = req.body;
   const camp = new Campground(campground);
+  camp.images = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   camp.owner = req.user._id;
   await camp.save();
+  console.log(camp);
   req.flash(`success`, `Successfully made a new campground!`);
   res.redirect(`campgrounds/${camp._id}`);
 });
@@ -42,7 +43,19 @@ module.exports.getEditForm = catchAsync(async (req, res) => {
 
 module.exports.editCampground = catchAsync(async (req, res) => {
   const { id } = req.params;
-  await Campground.findOneAndUpdate(id, req.body.campground, { runValidators: true });
+  const { deleteImages } = req.body;
+  console.log(deleteImages);
+  const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+  const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+  campground.images.push(...imgs);
+  await campground.save();
+  if (deleteImages) {
+    for (let filename of deleteImages) {
+      await uploader.destroy(filename);
+    }
+    await campground.updateOne({ $pull: { images: { filename: { $in: deleteImages } } } });
+  }
+  console.log(campground);
   req.flash(`success`, `Successfully updated the campground `);
   res.redirect(`/campgrounds/${id}`);
 });

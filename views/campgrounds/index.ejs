@@ -4,10 +4,14 @@
 <% for (let c of camps) {%>
 <div class="card mb-3">
   <div class="row">
-    <div class="col-md-4">
-      <img class="img-fluid" src="<%= c.image %> " alt="" />
+    <div class="col-lg-4">
+      <% if(c.images.length===0) {%>
+      <img class="img-fluid w-100" src="https://cdn.sanity.io/images/0vv8moc6/urologytimes/d198c3b708a35d9adcfa0435ee12fe454db49662-640x400.png?fit=crop&auto=format" alt="" />
+      <% } else { %>
+      <img class="img-fluid w-100" src="<%= c.images[0].url %>" alt="" />
+      <% } %>
     </div>
-    <div class="col-md-8">
+    <div class="col-lg-8">
       <div class="card-body">
         <h5 class="card-title"><%= c.title %></h5>
         <p class="card-text"><%= c.description %></p>
