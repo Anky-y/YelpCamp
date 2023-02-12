@@ -23,11 +23,14 @@ module.exports.createNewCampground = catchAsync(async (req, res, next) => {
 
   const { campground } = req.body;
   const camp = new Campground(campground);
-  camp.geometry = geoData.body.features[0].geometry;
   camp.images = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   camp.owner = req.user._id;
+  if (geoData.body.features.length !== 0) {
+    camp.geometry = geoData.body.features[0].geometry;
+  } else {
+    camp.geometry = { type: "Point", coordinates: [] };
+  }
   await camp.save();
-  console.log(camp);
   req.flash(`success`, `Successfully made a new campground!`);
   res.redirect(`campgrounds/${camp._id}`);
 });

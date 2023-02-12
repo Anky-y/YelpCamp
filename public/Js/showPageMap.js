@@ -1,13 +1,15 @@
 navigator.geolocation.getCurrentPosition((data) => {
   {
     const { longitude, latitude } = data.coords;
-    const parsedData = JSON.parse(campground);
+    // const parsedData = JSON.parse(campground);
+    // console.log(campground);
     // console.log([longitude, latitude]);
     let locationData;
-    if (parsedData.geometry.coordinates.length === 2) {
-      locationData = parsedData.geometry.coordinates;
+    if (campground.geometry.coordinates.length === 2) {
+      locationData = campground.geometry.coordinates;
     } else {
       locationData = [longitude, latitude];
+      campground.geometry.coordinates = [longitude, latitude];
     }
     mapboxgl.accessToken = mapToken;
     const map = new mapboxgl.Map({
@@ -18,7 +20,7 @@ navigator.geolocation.getCurrentPosition((data) => {
     });
     new mapboxgl.Marker()
       .setLngLat(locationData)
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${parsedData.title}</h3> <p>${parsedData.location}</p>`))
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${campground.title}</h3> <p>${campground.location}</p>`))
       .addTo(map);
   }
 });
