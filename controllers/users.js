@@ -13,7 +13,7 @@ module.exports.register = catchAsync(async (req, res) => {
     req.login(registeredUser, (err) => {
       if (err) return next(err);
       req.flash(`success`, `Welcome to Yelp Camp`);
-      res.redirect(`/`);
+      res.redirect(`/campgrounds`);
     });
   } catch (e) {
     req.flash(`error`, e.message);
@@ -27,7 +27,7 @@ module.exports.getLoginForm = (req, res) => {
 
 module.exports.login = async (req, res) => {
   req.flash(`success`, `Welcome! :)`);
-  const redirectUrl = req.session.returnTo || `/`;
+  const redirectUrl = req.session.returnTo || `/campgrounds`;
   delete req.session.returnTo;
   res.redirect(redirectUrl);
 };
@@ -37,6 +37,6 @@ module.exports.logout = async (req, res) => {
     if (err) {
       return next(err);
     } else req.flash(`success`, `Successfully logged out`);
-    res.redirect(`/`);
+    res.redirect(`/campgrounds`);
   });
 };

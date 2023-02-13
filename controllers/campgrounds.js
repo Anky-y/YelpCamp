@@ -58,7 +58,6 @@ module.exports.getEditForm = catchAsync(async (req, res) => {
 module.exports.editCampground = catchAsync(async (req, res) => {
   const { id } = req.params;
   const { deleteImages } = req.body;
-  console.log(deleteImages);
   const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
   const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   campground.images.push(...imgs);
@@ -69,7 +68,6 @@ module.exports.editCampground = catchAsync(async (req, res) => {
     }
     await campground.updateOne({ $pull: { images: { filename: { $in: deleteImages } } } });
   }
-  console.log(campground);
   req.flash(`success`, `Successfully updated the campground `);
   res.redirect(`/campgrounds/${id}`);
 });
