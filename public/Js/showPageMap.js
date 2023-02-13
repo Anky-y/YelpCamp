@@ -18,6 +18,8 @@ navigator.geolocation.getCurrentPosition((data) => {
       center: locationData, // starting position [lng, lat]
       zoom: 8, // starting zoom
     });
+    map.addControl(new mapboxgl.NavigationControl());
+
     new mapboxgl.Marker()
       .setLngLat(locationData)
       .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<h3>${campground.title}</h3> <p>${campground.location}</p>`))
