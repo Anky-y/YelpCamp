@@ -46,6 +46,8 @@ app.use(methodOverride(`_method`));
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(mongoSanitize());
 
+const secret = process.env.SECRET || `thissecret`;
+
 const store = new MongoDBStore({
   url: dbUrl,
   secret,
@@ -55,8 +57,6 @@ const store = new MongoDBStore({
 store.on(`error`, function (e) {
   console.log(`Session Store Error!`);
 });
-
-const secret = process.env.SECRET || `thissecret`;
 
 const sessionConfig = {
   store,
