@@ -48,8 +48,10 @@
         </div>
         <% }) %>
       </div>
-      <div class="mb-3"><button class="btn btn-info">Update Campground</button></div>
+      <div>
+        <button class="btn btn-info mt-1">Update Campground</button>
+        <a href="/campgrounds/<%= camp._id %>" class="btn btn-secondary mt-1">Back to Campground</a>
+      </div>
     </form>
-    <footer><a href="/campgrounds/<%= camp._id %> ">Back to Campground</a></footer>
   </div>
 </div>

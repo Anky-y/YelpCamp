@@ -1,7 +1,6 @@
 <% layout(`layouts/boilerplate`) %>
 <div id="cluster-map" class="mt-0"></div>
 <h1>All campgrounds</h1>
-<a href="/campgrounds/new">Add Campground</a>
 <% for (let c of camps) {%>
 <div class="card mb-3">
   <div class="row">
@@ -17,7 +16,7 @@
         <h5 class="card-title"><%= c.title %></h5>
         <p class="card-text"><%= c.description %></p>
         <p class="card-text"><small class="text-muted"><%=c.location%></small></p>
-        <a href="/campgrounds/<%= c._id %>" class="btn btn-primary">view <%= c.title %> </a>
+        <a href="/campgrounds/<%= c._id %>" class="btn btn-primary">View <%= c.title %> </a>
       </div>
     </div>
   </div>
